@@ -1,0 +1,118 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+// LCD I2C address
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+// Pin connections
+#define IR_SENSOR_1 2
+#define IR_SENSOR_2 3
+#define BUZZER 8
+
+// Distance between the two IR sensors
+// Change this according to your actual setup
+float distance = 0.20;  // 20 cm in metres
+
+// Speed limit
+float speedLimit = 1.0;  // 1 m/s
+
+unsigned long startTime = 0;
+unsigned long endTime = 0;
+
+bool vehicleDetected = false;
+
+void setup() {
+  pinMode(IR_SENSOR_1, INPUT);
+  pinMode(IR_SENSOR_2, INPUT);
+  pinMode(BUZZER, OUTPUT);
+
+  digitalWrite(BUZZER, LOW);
+
+  Serial.begin(9600);
+
+  lcd.init();
+  lcd.backlight();
+
+  lcd.setCursor(0, 0);
+  lcd.print("Vehicle Speed");
+  lcd.setCursor(0, 1);
+  lcd.print("Measurement");
+  delay(2000);
+
+  lcd.clear();
+}
+
+void loop() {
+
+  // Detect vehicle at first IR sensor
+  if (digitalRead(IR_SENSOR_1) == LOW && !vehicleDetected) {
+
+    startTime = millis();
+    vehicleDetected = true;
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Vehicle Detected");
+
+    delay(100);
+  }
+
+  // Detect vehicle at second IR sensor
+  if (digitalRead(IR_SENSOR_2) == LOW && vehicleDetected) {
+
+    endTime = millis();
+
+    // Calculate time in seconds
+    float timeTaken = (endTime - startTime) / 1000.0;
+
+    // Calculate speed
+    float speed = distance / timeTaken;
+
+    // Convert to km/h
+    float speedKmph = speed * 3.6;
+
+    // Display speed
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Speed:");
+
+    lcd.setCursor(0, 1);
+    lcd.print(speedKmph);
+    lcd.print(" km/h");
+
+    // Print to Serial Monitor
+    Serial.print("Vehicle Speed: ");
+    Serial.print(speedKmph);
+    Serial.println(" km/h");
+
+    // Overspeed alert
+    if (speed > speedLimit) {
+
+      digitalWrite(BUZZER, HIGH);
+
+      Serial.println("WARNING: Overspeeding!");
+
+      delay(2000);
+
+      digitalWrite(BUZZER, LOW);
+
+    } else {
+
+      digitalWrite(BUZZER, LOW);
+
+      Serial.println("Speed within limit");
+
+      delay(2000);
+    }
+
+    vehicleDetected = false;
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Ready for");
+    lcd.setCursor(0, 1);
+    lcd.print("Next Vehicle");
+
+    delay(1000);
+  }
+}
