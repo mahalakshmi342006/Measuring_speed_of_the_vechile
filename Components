@@ -1,0 +1,17 @@
+Components Used
+
+The following components are used in your Vehicle Speed Measurement Using Arduino project, according to your project report.
+
+Component	Purpose
+Arduino UNO	
+       Main controller that processes sensor data and calculates vehicle speed.
+IR Sensors ×2	
+       Detect the vehicle at two fixed points to measure the time taken.
+16×2 LCD with I2C Module
+       Displays the measured vehicle speed.
+Buzzer
+       Provides an alert when the vehicle exceeds the predefined speed limit.
+Breadboard	
+       Used to assemble and test the circuit without soldering.
+Jumper Wires	
+      Connect the Arduino, sensors, LCD, and buzzer.
