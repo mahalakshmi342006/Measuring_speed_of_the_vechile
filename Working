@@ -1,0 +1,15 @@
+## ⚙️ Working Principle
+
+The vehicle speed measurement system operates by detecting a moving vehicle at two fixed points and calculating the time taken to travel between them. The system uses an Arduino UNO as the main controller, two IR sensors for vehicle detection, a 16×2 LCD with an I2C module for displaying the measured speed, and a buzzer for overspeeding alerts.
+
+First, the two IR sensors are placed at a known fixed distance apart. When the vehicle crosses the first IR sensor, the Arduino records the starting time. As the vehicle continues moving and crosses the second IR sensor, the Arduino records the ending time.
+
+The Arduino then calculates the time difference between the two sensor detections. Using the known distance and the measured time, the vehicle speed is calculated using the formula:
+
+**Speed = Distance / Time**
+
+The calculated speed is then displayed on the LCD, allowing the user to monitor the vehicle's speed in real time. The system also compares the measured speed with a predefined speed limit.
+
+If the measured speed exceeds the set limit, the Arduino activates the buzzer to provide an immediate warning. If the speed remains within the limit, the system continues monitoring without activating the alert.
+
+This process demonstrates how sensors, timing measurements, and a microcontroller can be integrated to create a simple vehicle speed monitoring system. The project provides practical experience in Arduino programming, IR sensor interfacing, LCD communication, and real-time data processing.
