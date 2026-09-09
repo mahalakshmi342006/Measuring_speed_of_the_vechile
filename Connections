@@ -16,3 +16,28 @@ IR Sensor 2
 Buzzer	
                     +	-Digital Pin 8
 	                  −	-GND
+
+
+SENSOR PLACEMENT
+
+        VEHICLE MOVEMENT →
+        
+   ┌─────────┐                  ┌─────────┐
+   │ IR 1    │                  │ IR 2    │
+   │ Sensor  │                  │ Sensor  │
+   └────┬────┘                  └────┬────┘
+        │                            │
+        │                            │
+        └──────── Fixed Distance ────┘
+                    D
+
+        Arduino UNO
+             │
+       Calculate Speed
+             │
+       Speed = D / T
+             │
+       ┌─────┴─────┐
+       │           │
+      LCD        Buzzer
+    Display      Alert
