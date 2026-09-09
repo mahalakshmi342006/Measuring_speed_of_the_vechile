@@ -1,0 +1,18 @@
+Connection Table
+Component	Pin	Connect to Arduino UNO
+IR Sensor 1	             Arduino
+                    VCC	-5V
+	                  GND -GND
+	                  OUT	-Digital Pin 2
+IR Sensor 2	
+                    VCC	-5V
+                  	GND	-GND
+                  	OUT	-Digital Pin 3
+16×2 LCD I2C	
+                    VCC	-5V
+                  	GND	-GND
+	                  SDA	-A4
+	                  SCL	-A5
+Buzzer	
+                    +	-Digital Pin 8
+	                  −	-GND
